@@ -1,0 +1,23 @@
+{
+  "name": "orion-invoices-backend-api",
+  "version": "1.0.0",
+  "description": "Backend API for Orion Invoices, Currently using node, express as communication frameworks and MySQl for storage ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishnaKapadia/Orion-Invoices-Backend-API.git"
+  },
+  "author": "Krishna Kapadia, Orion Technology",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krishnaKapadia/Orion-Invoices-Backend-API/issues"
+  },
+  "homepage": "https://github.com/krishnaKapadia/Orion-Invoices-Backend-API#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
