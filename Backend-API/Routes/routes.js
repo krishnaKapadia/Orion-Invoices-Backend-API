@@ -9,6 +9,7 @@ router.get("/clients", function(req, res) {
 
 // POST request handler
 router.post("/clients", function(req, res) {
+    console.log(req.body);
     res.send({ clientName: "Krishna" });
 });
 

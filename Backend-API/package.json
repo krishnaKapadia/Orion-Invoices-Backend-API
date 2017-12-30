@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/krishnaKapadia/Orion-Invoices-Backend-API#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2"
   }
 }
