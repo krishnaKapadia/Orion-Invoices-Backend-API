@@ -6,6 +6,8 @@ var mysql = require('mysql');
 
 // Constants
 const PORT = 4000;
+const BASE_ROUTE = '/api/v1';
+
 //Db connection
 app.use(function(req, res, next) {
   res.locals.connection = mysql.createConnection({
@@ -22,7 +24,7 @@ app.use(function(req, res, next) {
 // Middleware
 
 // Custom route Middleware, ....com/api/...
-app.use("/api/v1", routes);
+app.use(BASE_ROUTE, routes);
 
 
 // Port Listening on server port var or port 4000
