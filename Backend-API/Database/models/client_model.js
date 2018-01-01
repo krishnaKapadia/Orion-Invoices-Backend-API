@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Create schema that data will require as a minimum
+/**
+* Model/Schema for Client Document in mongo
+*/
+
+// Create schema that data will require as a minimum
 const clientSchema = new Schema({
   code: {
     type: String,
@@ -22,6 +26,7 @@ const clientSchema = new Schema({
   }
 });
 
+// Create a model based off the schema
 const Client = mongoose.model('client', clientSchema);
 
 module.exports = Client;

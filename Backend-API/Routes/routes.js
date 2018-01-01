@@ -1,33 +1,20 @@
-const express = require('express');
-const router  = express.Router();
-const Client  = require('../Database/models/client');
+const express       = require('express');
+const router        = express.Router();
+const Client        = require('../Database/models/client_model');
+const client_routes = require('./client_routes');
+const task_routes   = require('./task_routes');
 
-// GET request handler, req = request, res = responce
-router.get("/clients", function(req, res) {
-    console.log("Getting");
-    res.send({ clientName: "Krishna" });
-});
+/**
+* Container to handle all Routes. Each route is split into a seperate route file
+* and all CRUD database actions are delegated to their respective controllers.
+*/
 
-// POST request handler
-router.post("/clients", function(req, res) {
-    // console.log(req.body);
-    Client.create(req.body).then( (client) => {
-      res.send(client);
-    });
+// Handles all /client routes
+router.use(client_routes);
 
-    // console.log(client);
+// Handles all /task routes
+router.use(task_routes);
 
-});
-
-// PUT request handler, Updates client matching id
-router.put("/clients/:id", function(req, res) {
-    console.log("Getting");
-    res.send({ clientName: "Krishna" });
-});
-
-// DELETE request handler
-router.delete("/clients/:id", function(req, res) {
-    res.send({ clientName: "Krishna" });
-});
+// TODO add more to handle all other routes
 
 module.exports = router;

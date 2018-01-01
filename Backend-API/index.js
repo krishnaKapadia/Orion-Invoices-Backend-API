@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 
 // Custom route Middleware, ....com/api/...
 app.use(BASE_ROUTE, routes);
+// require("./Routes/routes.js")(app);
 
 
 // Port Listening on server port var or port 4000
