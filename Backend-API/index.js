@@ -2,24 +2,12 @@
 const express = require('express');
 const app = express();
 const routes = require('./routes/routes');
-var mysql = require('mysql');
 
 // Constants
 const PORT = 4000;
 const BASE_ROUTE = '/api/v1';
 
-//Db connection
-app.use(function(req, res, next) {
-  res.locals.connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'test'
-  });
 
-  res.locals.connection.connect();
-  next();
-});
 
 // Middleware
 
