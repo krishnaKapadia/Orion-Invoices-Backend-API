@@ -9,7 +9,13 @@ router.get("/clients", function(req, res) {
 
 // POST request handler
 router.post("/clients", function(req, res) {
-    res.send({ clientName: "Krishna" });
+    console.log(req.body);
+
+    res.send({
+        type: "POST",
+        clientName: req.body.clientName,
+    });
+
 });
 
 // PUT request handler, Updates client matching id
