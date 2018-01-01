@@ -7,6 +7,7 @@ var Employee = require('../models/employee_model');
 
 // Gets all employees from the database
 exports.findAll = (req, res) => {
+  console.log("Employee /GET");
   Employee.find({}).then( (employees) => {
     res.send(employees);
   })

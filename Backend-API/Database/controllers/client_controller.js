@@ -7,6 +7,8 @@ var Client = require('../models/client_model');
 
 // Gets all database items
 exports.findAll = (req, res) => {
+  console.log("Client /GET");
+
   Client.find({}).then( (clients) => {
     res.send(clients);
   });

@@ -7,6 +7,7 @@ var Task = require('../models/task_model');
 
 // Gets all Task's
 exports.findAll = (req, res) => {
+  console.log("Task /GET");
   Task.find({}).then( (tasks) => {
     res.send(tasks);
   })
