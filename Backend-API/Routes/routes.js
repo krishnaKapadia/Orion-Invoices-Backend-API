@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const Client  = require('../Database/models/client');
 
 // GET request handler, req = request, res = responce
 router.get("/clients", function(req, res) {
@@ -9,12 +10,12 @@ router.get("/clients", function(req, res) {
 
 // POST request handler
 router.post("/clients", function(req, res) {
-    console.log(req.body);
-
-    res.send({
-        type: "POST",
-        clientName: req.body.clientName,
+    // console.log(req.body);
+    Client.create(req.body).then( (client) => {
+      res.send(client);
     });
+
+    // console.log(client);
 
 });
 
