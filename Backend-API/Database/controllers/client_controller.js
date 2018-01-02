@@ -74,7 +74,7 @@ exports.delete = (req, res) => {
     if (err) {
       res.status(500).send( { message: "Failed to delete Client" });
     } else {
-      res.send( { message: "Client successfully deleted" });
+      res.send( { message: "Client successfully deleted", client: client });
     }
   });
 }
