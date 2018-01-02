@@ -64,9 +64,9 @@ exports.update = (req, res) => {
     client.save( (err) => {
       if (err) {
         res.status(500).send( { type: "PUT", message: "Failed to update Client" });
+      } else {
+        res.send( { type: "PUT", message: "Client Updated", client: client });
       }
-
-      res.send( { type: "PUT", message: "Client Updated", client: client });
     })
 
   })
