@@ -15,9 +15,9 @@ router.get('/employees', employees.findAll);
 router.post('/employees', employees.create);
 
 // PUT request handler, updates a employee
-router.put('/employees:id', employees.update);
+router.put('/employees/:id', employees.update);
 
 // DELETE request handler, deletes a spesific employee
-router.delete('/employees:id', employees.delete);
+router.delete('/employees/:id', employees.delete);
 
 module.exports = router;
