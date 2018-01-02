@@ -8,7 +8,7 @@ const Schema   = mongoose.Schema;
 // Base Schema
 const invoiceSchema = new Schema({
   inv_number: {
-    type: number,
+    type: Number,
     required: [true, "Every Invoice must have an invoice number"]
   },
 
