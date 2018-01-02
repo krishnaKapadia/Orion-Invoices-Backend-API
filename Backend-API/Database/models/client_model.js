@@ -23,7 +23,7 @@ const clientSchema = new Schema({
   },
 
   phone_num: {
-    type: Number
+    type: String
   }
 });
 

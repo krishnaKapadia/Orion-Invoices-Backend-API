@@ -11,23 +11,11 @@ exports.findAll = (req, res) => {
 
   Client.find({}, (err, data) => {
     if(err || data === null) {
-      err.status(500).send({ message: "Could not retrieve clients" });
+      err.status(500).send({ type: "GET", message: "Could not retrieve clients" });
     }
   }).then( (clients) => {
     res.send(clients);
   });
-
-  // console.log({ type: 'GET' });
-}
-
-// Creates a new client database item and adds it to the database
-exports.create = (req, res) => {
-  // Client.create(req.body).then( (client) => {
-    // console.log(client);
-    // res.send(client);
-  // });
-
-  // console.log({ type: 'POST' });
 }
 
 // Gets a single specified client, matching the passed client id
@@ -36,12 +24,29 @@ exports.findOne = (req, res) => {
 
   Client.findById(req.params.code, (err, client) => {
     if(err || client === null) {
-      res.status(500).send( { message: "Could not retrieve client" });
+      res.status(500).send( { type: "GET", message: "Could not retrieve client" });
     }
   }).then( (client) => {
     res.send(client);
   })
 }
+
+// Creates a new client database item and adds it to the database
+exports.create = (req, res) => {
+
+  // Ensure that the client body exists in the request
+  if(!req.body) {
+    res.status(500).send( { type: "POST", message: "Client information cannot be empty. Client could not be created" });
+  } else {
+    // Create the client in the database and return the created client
+    Client.create(req.body).then( (client) => {
+      // console.log(client);
+      res.send( { message: "Client created", client } );
+    });
+  }
+
+}
+
 
 // Updates a single specified client's details matching the passed client id
 exports.update = (req, res) => {
@@ -49,7 +54,7 @@ exports.update = (req, res) => {
   // First get the client that matches the id
   Client.findById(req.params.code, (err, client) => {
     if(err || client === null) {
-      res.status(500).send( { message: "Could not retrieve client" });
+      res.status(500).send( { type: "GET", message: "Could not retrieve client. Client may not exist" });
     }
   }).then( (client) => {
     // Edit the client
@@ -58,10 +63,10 @@ exports.update = (req, res) => {
     // Save the newly modified client
     client.save( (err) => {
       if (err) {
-        res.status(500).send( { message: "Failed to update Client" });
+        res.status(500).send( { type: "PUT", message: "Failed to update Client" });
       }
 
-      res.send( { message: "Client Updated", client: client });
+      res.send( { type: "PUT", message: "Client Updated", client: client });
     })
 
   })
@@ -69,12 +74,12 @@ exports.update = (req, res) => {
 
 // Deletes a single specified client matching the passed id
 exports.delete = (req, res) => {
-  // console.log(req);
+
   Client.remove( { _id: req.params.code }, (err, client) => {
     if (err) {
-      res.status(500).send( { message: "Failed to delete Client" });
+      res.status(500).send( { type: "DELETE", message: "Failed to delete Client" });
     } else {
-      res.send( { message: "Client successfully deleted", client: client });
+      res.send( { type: "DELETE", message: "Client successfully deleted", client: client });
     }
   });
 }
