@@ -64,23 +64,6 @@ exports.update = (req, res) => {
     })
 
   })
-
-  // Note.findById(req.params.noteId, function(err, note) {
-  //     if(err) {
-  //         res.status(500).send({message: "Could not find a note with id " + req.params.noteId});
-  //     }
-  //
-  //     note.title = req.body.title;
-  //     note.content = req.body.content;
-  //
-  //     note.save(function(err, data){
-  //         if(err) {
-  //             res.status(500).send({message: "Could not update note with id " + req.params.noteId});
-  //         } else {
-  //             res.send(data);
-  //         }
-  //     });
-  // });
 }
 
 // Deletes a single specified client matching the passed id
