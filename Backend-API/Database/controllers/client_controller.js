@@ -14,7 +14,7 @@ exports.findAll = (req, res) => {
       err.status(500).send({ type: "GET", message: "Could not retrieve clients" });
     }
   }).then( (clients) => {
-    res.send(clients);
+    res.send({ type: "GET", message: "GET all successful", clients } );
   });
 }
 
@@ -27,7 +27,7 @@ exports.findOne = (req, res) => {
       res.status(500).send( { type: "GET", message: "Could not retrieve client" });
     }
   }).then( (client) => {
-    res.send(client);
+    res.send({ type: "GET", message: "GET client successful", client });
   })
 }
 
@@ -41,7 +41,7 @@ exports.create = (req, res) => {
     // Create the client in the database and return the created client
     Client.create(req.body).then( (client) => {
       // console.log(client);
-      res.send( { message: "Client created", client } );
+      res.send( { type: "POST", message: "Client created", client } );
     });
   }
 
