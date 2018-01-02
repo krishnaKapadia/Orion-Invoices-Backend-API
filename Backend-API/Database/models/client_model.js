@@ -9,7 +9,8 @@ const Schema = mongoose.Schema;
 const clientSchema = new Schema({
   code: {
     type: String,
-    required: [true, "Client Code is required"]
+    required: [true, "Client Code is required"],
+    unique: true
   },
 
   name: {

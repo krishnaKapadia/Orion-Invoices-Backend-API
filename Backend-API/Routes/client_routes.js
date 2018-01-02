@@ -9,13 +9,16 @@ var clients = require('../Database/controllers/client_controller');
 // GET all clients from the database
 router.get('/clients', clients.findAll);
 
+// GET a single client from the database
+router.get('/clients/:code', clients.findOne);
+
 // POST request handler, creates a new client
 router.post('/clients', clients.create);
 
 // PUT request handler, updates a client
-router.put('/clients:id', clients.update);
+router.put('/clients/:code', clients.update);
 
 // DELETE request handler, deletes a spesific client
-router.delete('/clients:id', clients.delete);
+router.delete('/clients/:code', clients.delete);
 
 module.exports = router;

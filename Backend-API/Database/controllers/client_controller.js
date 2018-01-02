@@ -5,11 +5,15 @@ var Client = require('../models/client_model');
    Called through client_routes.js
  */
 
-// Gets all database items
+// Gets all clients
 exports.findAll = (req, res) => {
-  console.log("Client /GET");
+  // console.log("Client /GET");
 
-  Client.find({}).then( (clients) => {
+  Client.find({}, (err, data) => {
+    if(err || data === null) {
+      err.status(500).send({ message: "Could not retrieve clients" });
+    }
+  }).then( (clients) => {
     res.send(clients);
   });
 
@@ -26,18 +30,61 @@ exports.create = (req, res) => {
   // console.log({ type: 'POST' });
 }
 
-// Gets a single specified client, matching the passed id
+// Gets a single specified client, matching the passed client id
 exports.findOne = (req, res) => {
+  console.log(req.params.code);
 
-
+  Client.findById(req.params.code, (err, client) => {
+    if(err || client === null) {
+      res.status(500).send( { message: "Could not retrieve client" });
+    }
+  }).then( (client) => {
+    res.send(client);
+  })
 }
 
-// Updates a single specified client's details matching the passed id
+// Updates a single specified client's details matching the passed client id
 exports.update = (req, res) => {
 
+  // First get the client that matches the id
+  Client.findById(req.params.code, (err, client) => {
+    if(err || client === null) {
+      res.status(500).send( { message: "Could not retrieve client" });
+    }
+  }).then( (client) => {
+    // Edit the client
+    client.name = req.body.name;
+
+    client.save( (err) => {
+      if (err) {
+        res.status(500).send( { message: "Failed to update Client" });
+      }
+
+      res.send( { message: "Client Updated", client: client });
+    })
+
+  })
+
+  // Note.findById(req.params.noteId, function(err, note) {
+  //     if(err) {
+  //         res.status(500).send({message: "Could not find a note with id " + req.params.noteId});
+  //     }
+  //
+  //     note.title = req.body.title;
+  //     note.content = req.body.content;
+  //
+  //     note.save(function(err, data){
+  //         if(err) {
+  //             res.status(500).send({message: "Could not update note with id " + req.params.noteId});
+  //         } else {
+  //             res.send(data);
+  //         }
+  //     });
+  // });
 }
 
 // Deletes a single specified client matching the passed id
 exports.delete = (req, res) => {
-
+  console.log(req);
+  // Client.remove( { _id: "5a49fb7cae78b925c402e2ef"} )
 }

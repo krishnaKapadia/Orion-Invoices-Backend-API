@@ -7,9 +7,9 @@ const Schema   = mongoose.Schema;
 
 // Create Schema for minimum requried data
 const taskSchema = new Schema({
-  code: {
-    type: Number,
-  },
+  // code: { Uses mongo's auto generated id instead
+  //   type: Number,
+  // },
 
   desc: {
     type: String,
