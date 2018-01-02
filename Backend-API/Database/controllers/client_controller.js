@@ -55,6 +55,7 @@ exports.update = (req, res) => {
     // Edit the client
     client.name = req.body.name;
 
+    // Save the newly modified client
     client.save( (err) => {
       if (err) {
         res.status(500).send( { message: "Failed to update Client" });
@@ -68,6 +69,12 @@ exports.update = (req, res) => {
 
 // Deletes a single specified client matching the passed id
 exports.delete = (req, res) => {
-  console.log(req);
-  // Client.remove( { _id: "5a49fb7cae78b925c402e2ef"} )
+  // console.log(req);
+  Client.remove( { _id: req.params.code }, (err, client) => {
+    if (err) {
+      res.status(500).send( { message: "Failed to delete Client" });
+    } else {
+      res.send( { message: "Client successfully deleted" });
+    }
+  });
 }
