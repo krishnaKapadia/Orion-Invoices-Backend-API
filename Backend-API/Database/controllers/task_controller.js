@@ -38,7 +38,7 @@ exports.create = (req, res) => {
   if(!req.body) {
     res.status(500).send( { type: "POST", message: "POST Request must have task data"})
   } else {
-    // Create the employee in the database and return the created employee
+    // Create the task in the database and return the created task
     Task.create(req.body).then( (task) => {
       res.send( { type: "POST", message: "Task Created", task});
     }).catch( (err) => {
@@ -61,7 +61,7 @@ exports.delete = (req, res) => {
     if(err) {
       res.status(500).send( { type: "DELETE", message: "Failed to delete task" });
     }else {
-      res.send( { type: "DELETE", message: "Employee successfully removed" });
+      res.send( { type: "DELETE", message: "Task successfully removed" });
     }
   });
 }
