@@ -59,7 +59,10 @@ exports.update = (req, res) => {
     if(client == null) res.status(500).send( { type: "GET", message: "Could not retrieve client matching that id" });
     else {
       // Edit the client
-      client.name = req.body.name;
+      client.code      = req.body.code;
+      client.name      = req.body.name;
+      client.address   = req.body.address;
+      client.phone_num = req.body.phone_num;
 
       // Save the newly modified client
       client.save().then( (client) => {

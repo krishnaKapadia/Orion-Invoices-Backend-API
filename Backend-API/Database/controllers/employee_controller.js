@@ -57,7 +57,13 @@ exports.update = (req, res) => {
     if(employee == null) res.status(500).send( { type: "GET", message: "Could not retrieve employee matching that id" });
     else {
       // Edit the employee
-      employee.first_name = req.body.first_name;
+      employee.code         = req.body.code;
+      employee.first_name   = req.body.first_name;
+      employee.last_name    = req.body.last_name;
+      employee.position     = req.body.position;
+      employee.rate         = req.body.rate;
+      employee.address      = req.body.address;
+      employee.phone_number = req.body.phone_number;
 
       // Save the newly modified employee
       employee.save().then( (employee) => {
