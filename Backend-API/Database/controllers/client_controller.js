@@ -42,6 +42,10 @@ exports.create = (req, res) => {
     Client.create(req.body).then( (client) => {
       // console.log(client);
       res.send( { type: "POST", message: "Client created", client } );
+    }).catch( (err) => {
+      if(err) {
+        res.status(500).send( { type: "GET", message: "Could not create Client", error: err.message});
+      }
     });
   }
 
@@ -50,25 +54,24 @@ exports.create = (req, res) => {
 
 // Updates a single specified client's details matching the passed client id
 exports.update = (req, res) => {
+  // First get client that matches id
+  Client.findById(req.params.code).then( (client) => {
+    if(client == null) res.status(500).send( { type: "GET", message: "Could not retrieve client matching that id" });
+    else {
+      // Edit the client
+      client.name = req.body.name;
 
-  // First get the client that matches the id
-  Client.findById(req.params.code, (err, client) => {
-    if(err || client === null) {
-      res.status(500).send( { type: "GET", message: "Could not retrieve client. Client may not exist" });
+      // Save the newly modified client
+      client.save().then( (client) => {
+        res.send( { type: "PUT", message: "Client Updated", client });
+      }).catch( (error) => {
+        res.status(500).send( { type: "GET", message: "Could not save client", error });
+      });
     }
-  }).then( (client) => {
-    // Edit the client
-    client.name = req.body.name;
-
-    // Save the newly modified client
-    client.save( (err) => {
-      if (err) {
-        res.status(500).send( { type: "PUT", message: "Failed to update Client" });
-      } else {
-        res.send( { type: "PUT", message: "Client Updated", client: client });
-      }
-    })
-
+  }).catch( (error) => {
+    if(error) {
+      res.status(500).send( { type: "GET", message: "Could not find client", error });
+    }
   })
 }
 

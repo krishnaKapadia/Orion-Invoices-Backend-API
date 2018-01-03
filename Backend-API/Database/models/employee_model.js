@@ -29,7 +29,7 @@ const employeeSchema = new Schema({
   },
 
   phone_number: {
-    type: Number
+    type: String
   },
 
   address: {

@@ -42,6 +42,10 @@ exports.create = (req, res) => {
     // Create the employee in the database and return the created employee
     Employee.create(req.body).then( (employee) => {
       res.send( { type: "POST", message: "Employee Created", employee});
+    }).catch( (err) => {
+      if(err) {
+        res.status(500).send( { type: "GET", message: "Could not create Employee", error: err.message });
+      }
     })
   }
 }
@@ -49,23 +53,23 @@ exports.create = (req, res) => {
 // Updates a single specified employees's details matching the passed id
 exports.update = (req, res) => {
   // First get employee that matches id
+  Employee.findById(req.params.id).then( (employee) => {
+    if(employee == null) res.status(500).send( { type: "GET", message: "Could not retrieve employee matching that id" });
+    else {
+      // Edit the employee
+      employee.first_name = req.body.first_name;
 
-  Employee.findByID(req.params.id, (err, employee) => {
-    if(err || employee === null) {
-      res.status(500).send( { type: "GET", message: "Could not retrieve employee matching that id" });
-    }
-  }).then( (employee) => {
-    // Edit the employee
-    employee = req.body;
-
-    // Save the newly modified employee
-    employee.save( (err) => {
-      if (err) {
-        res.status(500).send( { type: "PUT", message: "Failed to update Employee"});
-      } else {
+      // Save the newly modified employee
+      employee.save().then( (employee) => {
         res.send( { type: "PUT", message: "Employee Updated", employee });
-      }
-    });
+      }).catch( (error) => {
+        res.status(500).send( { type: "GET", message: "Could not save employee", error });
+      });
+    }
+  }).catch( (error) => {
+    if(error) {
+      res.status(500).send( { type: "GET", message: "Could not find employee", error });
+    }
   })
 }
 
