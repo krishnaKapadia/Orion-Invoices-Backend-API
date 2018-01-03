@@ -20,15 +20,16 @@ exports.findAll = (req, res) => {
 
 // Gets a single specified employee, matching the passed employee id
 exports.findOne = (req, res) => {
-  console.log(req.params.code);
 
-  Employee.findById(req.params.code, (err, employee) => {
-    if(err || employee === null) {
-      res.status(500).send( { type: "GET", message: "Could not retrieve employee, may not exist with matching id" });
+  Employee.findById(req.params.id).then( (employee) => {
+    if(employee == null) res.status(500).send( { type: "GET", message: "Could not retrieve employee" });
+    else res.send({ type: "GET", message: "GET employee successful", employee });
+  }).catch( (err) => {
+    if(err) {
+      res.status(500).send( { type: "GET", message: "Could not retrieve employee" });
     }
-  }).then( (employee) => {
-    res.send({ type: "GET", message: "GET employee successful", employee });
   })
+
 }
 
 // Creates a new employee and adds it to the database

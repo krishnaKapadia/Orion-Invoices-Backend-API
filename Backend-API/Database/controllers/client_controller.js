@@ -20,14 +20,14 @@ exports.findAll = (req, res) => {
 
 // Gets a single specified client, matching the passed client id
 exports.findOne = (req, res) => {
-  console.log(req.params.code);
 
-  Client.findById(req.params.code, (err, client) => {
-    if(err || client === null) {
+  Client.findById(req.params.code).then( (client) => {
+    if(client == null) res.status(500).send( { type: "GET", message: "Could not retrieve client" });
+    else res.send({ type: "GET", message: "GET client successful", client });
+  }).catch( (err) => {
+    if(err) {
       res.status(500).send( { type: "GET", message: "Could not retrieve client" });
     }
-  }).then( (client) => {
-    res.send({ type: "GET", message: "GET client successful", client });
   })
 }
 
