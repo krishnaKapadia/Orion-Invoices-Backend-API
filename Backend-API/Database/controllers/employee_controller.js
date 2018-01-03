@@ -26,7 +26,7 @@ exports.findOne = (req, res) => {
     else res.send({ type: "GET", message: "GET employee successful", employee });
   }).catch( (err) => {
     if(err) {
-      res.status(500).send( { type: "GET", message: "Could not retrieve employee" });
+      res.status(500).send( { type: "GET", message: "Could not find employee" });
     }
   })
 
@@ -80,7 +80,7 @@ exports.delete = (req, res) => {
     if(err) {
       res.status(500).send( { type: "DELETE", message: "Failed to delete Employee" });
     }else {
-      res.send( { type: "DELETE", message: "Employee successfully removed", employee });
+      res.send( { type: "DELETE", message: "Employee successfully removed" });
     }
   });
 }

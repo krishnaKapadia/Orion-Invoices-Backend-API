@@ -16,7 +16,7 @@ router.get('/tasks/:id', tasks.findOne);
 router.post('/tasks', tasks.create);
 
 // PUT request handler, updates a task
-router.put('/tasks/:id', tasks.update);
+// router.put('/tasks/:id', tasks.update);
 
 // DELETE request handler, deletes a spesific task
 router.delete('/tasks/:id', tasks.delete);
