@@ -26,7 +26,7 @@ exports.findOne = (req, res) => {
     else res.send({ type: "GET", message: "GET client successful", client });
   }).catch( (err) => {
     if(err) {
-      res.status(500).send( { type: "GET", message: "Could not retrieve client" });
+      res.status(500).send( { type: "GET", message: "Could not retrieve client", error: err.message });
     }
   })
 }

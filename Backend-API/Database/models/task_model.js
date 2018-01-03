@@ -7,10 +7,6 @@ const Schema   = mongoose.Schema;
 
 // Create Schema for minimum requried data
 const taskSchema = new Schema({
-  // code: { Uses mongo's auto generated id instead
-  //   type: Number,
-  // },
-
   desc: {
     type: String,
     required: [true, "Task must have a name/description"]

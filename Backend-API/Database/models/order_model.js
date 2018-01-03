@@ -15,17 +15,17 @@ const itemSchema = new Schema({
 
   desc: {
     type: String,
-    required: true
+    required: [true, "Item description required"]
   },
 
   quantity: {
     type: Number,
-    required: true
+    required: [true, "Item quantity required"]
   },
 
   price: {
     type: Schema.Types.Decimal,
-    required: true
+    required: [true, "Item Price required"]
   }
 });
 

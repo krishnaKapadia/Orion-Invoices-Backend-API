@@ -17,7 +17,8 @@ const employeeSchema = new Schema({
   },
 
   last_name: {
-    type: String
+    type: String,
+    required: [true, "Last Name is required"]
   },
 
   position: {
@@ -29,7 +30,8 @@ const employeeSchema = new Schema({
   },
 
   phone_number: {
-    type: String
+    type: String,
+    required: [true, "Phone Number is required"]
   },
 
   address: {
