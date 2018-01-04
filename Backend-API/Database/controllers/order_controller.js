@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 // Gets a single specified order, matching the passed id
 exports.findOne = (req, res) => {
 
-  Order.findById(req.params.code).then( (order) => {
+  Order.findById(req.params.id).then( (order) => {
     if(order === null) res.status(500).send( { type: "GET", message: "Failed to find specified order"} );
     else res.send({ type: "GET", message: "GET order successful", order });
   }).catch( (err) => {
