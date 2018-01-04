@@ -69,7 +69,7 @@ exports.update = (req, res) => {
       employee.save().then( (employee) => {
         res.send( { type: "PUT", message: "Employee Updated", employee });
       }).catch( (error) => {
-        res.status(500).send( { type: "GET", message: "Could not save employee", error });
+        res.status(500).send( { type: "PUT", message: "Could not save employee", error });
       });
     }
   }).catch( (error) => {

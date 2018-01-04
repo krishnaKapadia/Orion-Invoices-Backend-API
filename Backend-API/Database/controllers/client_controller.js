@@ -44,7 +44,7 @@ exports.create = (req, res) => {
       res.send( { type: "POST", message: "Client created", client } );
     }).catch( (err) => {
       if(err) {
-        res.status(500).send( { type: "GET", message: "Could not create Client", error: err.message});
+        res.status(500).send( { type: "POST", message: "Could not create Client", error: err.message});
       }
     });
   }
