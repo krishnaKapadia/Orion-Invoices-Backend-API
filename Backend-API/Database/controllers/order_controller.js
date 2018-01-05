@@ -52,7 +52,9 @@ exports.update = (req, res) => {
     if(order == null) res.status(500).send( { type: "GET", message: "Failed to find specified order" });
     else {
       // Edit the order
-      order.code = req.body.code;
+      order.code        = req.body.code;
+      order.client_name = req.body.client_name;
+      order.items       = req.body.items;
 
       // Save the modified order
       order.save().then( (order) => {
