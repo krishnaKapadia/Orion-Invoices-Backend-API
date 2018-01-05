@@ -8,7 +8,7 @@ var Order = require('../models/order_model');
 // Gets all Order's
 exports.findAll = (req, res) => {
   Order.find({}).then( (orders) => {
-    res.send(orders);
+    res.send({type: "GET", message: "GET order successful", orders});
   }).catch( (err) => {
     if(err) {
       res.status(500).send( { type: "GET", message: "Could not fetch Orders"});

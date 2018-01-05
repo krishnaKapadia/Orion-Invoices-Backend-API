@@ -47,7 +47,7 @@ const orderSchema = new Schema({
 
   items: {
     type: [itemSchema],
-    required: true
+    required: [true, "Order must have items"]
   }
 });
 

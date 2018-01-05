@@ -5,17 +5,69 @@ const Schema   = mongoose.Schema;
  * Model/Schema for Invoice Document in Mongo
  */
 
+// Item Schema
+const itemSchema = new Schema({
+  code: {
+    type: String
+  },
+
+  desc: {
+    type: String,
+    required: [true, "Item description required"]
+  },
+
+  quantity: {
+    type: Number,
+    required: [true, "Item quantity required"]
+  },
+
+  price: {
+    type: Schema.Types.Decimal,
+    required: [true, "Item price required"]
+  }
+
+});
+
 // Base Schema
 const invoiceSchema = new Schema({
+
   inv_number: {
     type: Number,
     required: [true, "Every Invoice must have an invoice number"]
   },
 
+  client_code: {
+    type: String,
+  },
 
+  client_name: {
+    type: String,
+    required: [true, "Every invoice must have a client number"]
+  },
 
+  client_address: {
+    type: String
+  },
 
+  items: {
+    type: [itemSchema],
+    required: [true, "Invoice must have items"]
+  },
 
+  subtotal: {
+    type: Schema.Types.Decimal,
+    required: [true, "Invoice must have subtotal"]
+  },
+
+  tax_rate: {
+    type: Number,
+    required: [true, "Invoice must have a tax rate"]
+  },
+
+  total: {
+    type: Schema.Types.Decimal,
+    required: [true, "Invoice must have total"]
+  }
 });
 
 const Invoice = mongoose.model('invoice', invoiceSchema);
