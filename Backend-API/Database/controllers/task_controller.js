@@ -50,9 +50,14 @@ exports.create = (req, res) => {
 }
 
 // Updates a single specified tasks's details matching the passed id
-// exports.update = (req, res) => {
-//
-// }
+exports.update = (req, res) => {
+  Task.findById(req.params.id).then( (task) => {
+    if(task == null) res.status(500).send( { type: "GET", message: "Failed to find specified task" });
+      else res.send({ type: "GET", message: "GET order successful", task });
+  }).catch( (err) => {
+    if(err) res.status(500).send( { type: "GET", message: "Failed to get task" });
+  });
+}
 
 // Deletes a single specified task matching the passed id
 exports.delete = (req, res) => {
