@@ -35,7 +35,12 @@ const clientSchema = new Schema({
 
   phone_num: {
     type: String
-  }
+  },
+
+  created: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 // Create a model based off the schema

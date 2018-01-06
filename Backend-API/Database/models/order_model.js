@@ -9,15 +9,6 @@ const Schema   = mongoose.Schema;
 
 // Item Schema
 const itemSchema = new Schema({
-  /**
-   *  Ensures that the order is linked to the business that
-   * created it.
-   */
-
-  company_id: {
-    type: Schema.Types.ObjectId
-    // TODO make this required
-  },
 
   code: {
     type: String
@@ -41,6 +32,16 @@ const itemSchema = new Schema({
 
 // Order Schema
 const orderSchema = new Schema({
+  /**
+   *  Ensures that the order is linked to the business that
+   * created it.
+   */
+
+  company_id: {
+    type: Schema.Types.ObjectId
+    // TODO make this required
+  },
+  
   code: {
     type: String,
   },
