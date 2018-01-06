@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
     res.send({type: "GET", message: "GET order successful", orders});
   }).catch( (err) => {
     if(err) {
-      res.status(500).send( { type: "GET", message: "Could not fetch Orders"});
+      res.status(500).send( { type: "GET", message: "Could not fetch Orders", error: err });
     }
   })
 }
