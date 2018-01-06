@@ -7,6 +7,16 @@ const Schema   = mongoose.Schema;
 
 // Create Schema for minimum requried data
 const taskSchema = new Schema({
+  /**
+   *  Ensures that the task is linked to the user that
+   * created it.
+   */
+
+  user_id: {
+    type: Schema.Types.ObjectId
+    // TODO make this required
+  },
+
   desc: {
     type: String,
     required: [true, "Task must have a name/description"]

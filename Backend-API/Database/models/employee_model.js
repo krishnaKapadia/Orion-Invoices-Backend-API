@@ -7,6 +7,17 @@ const Schema   = mongoose.Schema;
 
 // Schema Decleration
 const employeeSchema = new Schema({
+
+  /**
+   *  Ensures that the Employee is linked to the business that
+   * they work for.
+   */
+
+  company_id: {
+    type: Schema.Types.ObjectId
+    // TODO make this required
+  },
+
   code: {
     type: String
   },

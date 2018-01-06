@@ -31,6 +31,16 @@ const itemSchema = new Schema({
 // Base Schema
 const invoiceSchema = new Schema({
 
+  /**
+   *  Ensures that the order is linked to the business that
+   * created it.
+   */
+
+  company_id: {
+    type: Schema.Types.ObjectId
+    // TODO make this required
+  },
+
   inv_number: {
     type: Number,
     required: [true, "Every Invoice must have an invoice number"]

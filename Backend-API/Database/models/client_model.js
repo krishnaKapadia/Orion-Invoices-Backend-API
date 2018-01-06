@@ -7,6 +7,17 @@ const Schema = mongoose.Schema;
 
 // Create schema that data will require as a minimum
 const clientSchema = new Schema({
+
+  /**
+   *  Ensures that the Client is linked to the business that
+   * they are associated with for.
+   */
+
+  company_id: {
+    type: Schema.Types.ObjectId
+    // TODO make this required
+  },
+
   code: {
     type: String,
     required: [true, "Client Code is required"],
