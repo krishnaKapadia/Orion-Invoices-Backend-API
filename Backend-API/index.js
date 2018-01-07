@@ -23,6 +23,6 @@ app.use(BASE_ROUTE, routes);
 
 
 // Port Listening on server port var or port 4000
-app.listen(process.env.port || PORT, function() {
+app.listen(process.env.PORT || PORT, function() {
     console.log("check");
 });
