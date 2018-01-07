@@ -37,7 +37,7 @@ node_modules/
 jspm_packages/
 
 #Hidden API Keys
-Services/
+dev_keys.js
 
 # Typescript v1 declaration files
 typings/
