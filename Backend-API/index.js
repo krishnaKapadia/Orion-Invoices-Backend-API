@@ -1,7 +1,7 @@
 // Base imports
 const express = require('express');
 const app = express();
-const routes = require('./routes/routes');
+const routes = require('./Routes/routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
