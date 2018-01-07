@@ -57,6 +57,7 @@ exports.update = (req, res) => {
       company.name = req.body.name;
       company.address = req.body.address;
       company.email = req.body.email;
+      company.accounts = req.body.accounts;
 
       // Save the newly modified employee
       company.save().then( (company) => {
