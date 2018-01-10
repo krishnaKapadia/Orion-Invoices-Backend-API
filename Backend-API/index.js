@@ -4,6 +4,7 @@ const app = express();
 const routes = require('./Routes/routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // Constants, including those in other files
 const API_Keys   = require('./Services/Keys/API_Keys');
@@ -16,6 +17,7 @@ mongoose.Promise = global.Promise;
 
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 // Custom route Middleware, ....com/api/...
