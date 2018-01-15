@@ -22,14 +22,9 @@ const employeeSchema = new Schema({
     type: String
   },
 
-  first_name: {
+  name: {
     type: String,
-    required: [true, "First Name is required"]
-  },
-
-  last_name: {
-    type: String,
-    required: [true, "Last Name is required"]
+    required: [true, "Full name is required"]
   },
 
   position: {
