@@ -32,7 +32,7 @@ const employeeSchema = new Schema({
   },
 
   rate: {
-    type: Number
+    type: String
   },
 
   phone_number: {
