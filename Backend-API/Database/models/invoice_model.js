@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
-
+const Float      = require('mongoose-float').loadType(mongoose);
 /**
  * Model/Schema for Invoice Document in Mongo
  */
@@ -22,7 +22,7 @@ const itemSchema = new Schema({
   },
 
   price: {
-    type: Schema.Types.Decimal,
+    type: Float,
     required: [true, "Item price required"]
   }
 
@@ -65,7 +65,7 @@ const invoiceSchema = new Schema({
   },
 
   subtotal: {
-    type: Schema.Types.Decimal,
+    type: Float,
     required: [true, "Invoice must have subtotal"]
   },
 
@@ -75,8 +75,20 @@ const invoiceSchema = new Schema({
   },
 
   total: {
-    type: Schema.Types.Decimal,
+    type: Float,
     required: [true, "Invoice must have total"]
+  },
+
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+
+  paid: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 });
 

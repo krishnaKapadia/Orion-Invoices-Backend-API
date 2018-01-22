@@ -7,7 +7,7 @@ var Invoice = require('../models/invoice_model');
 
 // Gets all Invoice's
 exports.findAll = (req, res) => {
-  Invoice.find({}).then( (invoices) => {
+  Invoice.find({}).sort( { paid: 1 }).then( (invoices) => {
     res.send({type: "GET", message: "GET order successful", invoices});
   }).catch( (err) => {
     if(err) {
@@ -61,6 +61,7 @@ exports.update = (req, res) => {
       invoice.tax_rate        = req.body.tax_rate;
       invoice.total           = req.body.total;
       invoice.items           = req.body.items;
+      invoice.paid            = req.body.paid;
 
       // Save the modified order
       invoice.save().then( (invoice) => {
