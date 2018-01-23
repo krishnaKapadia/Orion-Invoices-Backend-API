@@ -7,7 +7,7 @@ var Invoice = require('../models/invoice_model');
 
 // Gets all Invoice's
 exports.findAll = (req, res) => {
-  Invoice.find({}).sort( { paid: 1 }).then( (invoices) => {
+  Invoice.find({}).sort( [ ['paid', 1], ['date', -1] ]).then( (invoices) => {
     res.send({type: "GET", message: "GET order successful", invoices});
   }).catch( (err) => {
     if(err) {
