@@ -70,7 +70,7 @@ const invoiceSchema = new Schema({
   },
 
   tax_rate: {
-    type: Number,
+    type: Float,
     required: [true, "Invoice must have a tax rate"]
   },
 
