@@ -32,6 +32,22 @@ exports.findOne = (req, res) => {
   })
 }
 
+// Checks if the request body has a valid user
+exports.login = (req, res) => {
+  User.findOne({ username: req.body.username }).then((user) => {
+    if(user == null) res.status(500).send( { type: "GET", result: false, message: "Username does not exist" });
+    else {
+      var hashPass = this.hash(req.body.password);
+      console.log(hashPass);
+      if(user.password === hashPass) {
+        res.send( { type: "POST", message: "Username and Password combination valid", result: true });
+      }
+    }
+  }).catch((err) => {
+    if(err) res.status(500).send( { type: "GET", result: false, message: "Username or Password does not exist" });
+  })
+}
+
 // Creates a new user and adds it to the database
 exports.create = (req, res) => {
   // Ensure that the request body is not empty
@@ -39,7 +55,9 @@ exports.create = (req, res) => {
     res.status(500).send( { type: "POST", message: "POST Request must have user data"})
   } else {
     // First hash user password
-    req.body.password = this.hash(req.body.password);
+    const pass = this.hash(req.body.password);
+    req.body.password = pass.password;
+    req.body.salt = pass.salt;
 
     // Create the user in the database and return the created user
     User.create(req.body).then( (user) => {
@@ -93,7 +111,11 @@ exports.delete = (req, res) => {
 
 // Generates a hash
 exports.hash = (password) => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  const salt = bcrypt.genSaltSync(8);
+  return {
+    password: bcrypt.hashSync(password, salt, null),
+    salt
+  }
 }
 
 // Checks if password is valid

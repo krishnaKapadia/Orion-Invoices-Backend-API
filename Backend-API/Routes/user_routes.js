@@ -12,6 +12,9 @@ router.get('/users', users.findAll);
 // GET a single user from the database
 router.get('/users/:code', users.findOne);
 
+// POST to check if request body is a valid user, used for login
+router.post('/users/login', users.login)
+
 // POST request handler, creates a new user
 router.post('/users', users.create);
 

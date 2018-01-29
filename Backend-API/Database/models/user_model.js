@@ -22,24 +22,28 @@ const userSchema = new Schema({
     // TODO make this required
   },
 
+  salt: {
+    type: String,
+    required: [true, 'Salt must be generated'],
+  },
   // If user login through local registration
   // local: {
 
-    username: {
-      type: String,
-      required: [true, "Must specify a username"],
-      unique: true
-    },
+  username: {
+    type: String,
+    required: [true, "Must specify a username"],
+    unique: true
+  },
 
-    password: {
-      type: String,
-      required: [true, "Must specify a password"]
-    },
+  password: {
+    type: String,
+    required: [true, "Must specify a password"]
+  },
 
-    email: {
-      type: String,
-      required: [true, "Must specify an email"]
-    }
+  email: {
+    type: String,
+    required: [true, "Must specify an email"]
+  }
 
   // },
 
