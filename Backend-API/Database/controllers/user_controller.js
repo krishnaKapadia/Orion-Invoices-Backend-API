@@ -37,10 +37,11 @@ exports.login = (req, res) => {
   User.findOne({ username: req.body.username }).then((user) => {
     if(user == null) res.status(500).send( { type: "GET", result: false, message: "Username does not exist" });
     else {
-      var hashPass = this.hash(req.body.password);
-      console.log(hashPass);
+      var hashPass = this.reHash(req.body.password, user.salt).password;
       if(user.password === hashPass) {
         res.send( { type: "POST", message: "Username and Password combination valid", result: true });
+      }else{res.status(500).send( { type: "GET", result: false, message: "Username and Password combination is incorrect" });
+
       }
     }
   }).catch((err) => {
@@ -115,6 +116,12 @@ exports.hash = (password) => {
   return {
     password: bcrypt.hashSync(password, salt, null),
     salt
+  }
+}
+
+exports.reHash = (password, salt) => {
+  return {
+    password: bcrypt.hashSync(password, salt)
   }
 }
 
