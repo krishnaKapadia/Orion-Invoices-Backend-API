@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
+const Float     = require('mongoose-float').loadType(mongoose);
 
 /**
  * Model/Schema for Order Document in Mongo
@@ -25,7 +26,7 @@ const itemSchema = new Schema({
   },
 
   price: {
-    type: Schema.Types.Decimal,
+    type: Float,
     required: [true, "Item Price required"]
   }
 });
@@ -41,19 +42,25 @@ const orderSchema = new Schema({
     type: Schema.Types.ObjectId
     // TODO make this required
   },
-  
+
   code: {
-    type: String,
+    type: String
   },
 
   client_name: {
     type: String,
-    requried: true
+    requried: [true, 'Client name required']
   },
 
   created: {
     type: Date,
     default: Date.now
+  },
+
+  completed: {
+    type: Boolean,
+    default: false,
+    required: true
   },
 
   items: {

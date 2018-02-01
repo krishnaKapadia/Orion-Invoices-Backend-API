@@ -7,7 +7,7 @@ var Order = require('../models/order_model');
 
 // Gets all Order's
 exports.findAll = (req, res) => {
-  Order.find({}).then( (orders) => {
+  Order.find({}).sort([['completed', 1], ['created', 'desc']]).then( (orders) => {
     res.send({type: "GET", message: "GET order successful", orders});
   }).catch( (err) => {
     if(err) {
@@ -52,6 +52,7 @@ exports.update = (req, res) => {
     if(order == null) res.status(500).send( { type: "GET", message: "Failed to find specified order" });
     else {
       // Edit the order
+      order.completed   = req.body.completed;
       order.code        = req.body.code;
       order.client_name = req.body.client_name;
       order.items       = req.body.items;
