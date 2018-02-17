@@ -40,7 +40,6 @@ exports.create = (req, res) => {
   } else {
     // Create the client in the database and return the created client
     Client.create(req.body).then( (client) => {
-      // console.log(client);
       res.send( { type: "POST", message: "Client created", client } );
     }).catch( (err) => {
       if(err) {

@@ -33,13 +33,13 @@ exports.create = (req, res) => {
   // Ensure that the order body exists in the request
   if(!req.body) {
     res.status(500).send({ type: "POST", message: "Order name/description cannot be empty. Order could not be created" });
-  }else {
+  } else {
     // Create the order in the database and return the created order
     Order.create(req.body).then( (order) => {
       res.send({ type: "POST", message: "Order Created", order });
     }).catch( (err) => {
       if(err) {
-        res.status(500).send( { type: "POST", message: "Could not create order", error: err.message})
+        res.status(500).send( { type: "POST", message: "Could not create order", error: err.message});
       }
     })
   }

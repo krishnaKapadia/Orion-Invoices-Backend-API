@@ -21,7 +21,7 @@ const companySchema = new Schema({
   },
 
   email: {
-    type: String
+    type: String,
   },
 
   created: {

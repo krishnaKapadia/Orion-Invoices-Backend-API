@@ -69,6 +69,7 @@ exports.create = (req, res) => {
       }
     })
   }
+  // console.log(req, res);
 }
 
 // Updates a single specified user's details matching the passed id
