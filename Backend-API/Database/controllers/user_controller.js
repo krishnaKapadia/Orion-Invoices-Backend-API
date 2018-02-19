@@ -39,9 +39,18 @@ exports.login = (req, res) => {
     else {
       var hashPass = this.reHash(req.body.password, user.salt).password;
       if(user.password === hashPass) {
-        res.send( { type: "POST", message: "Username and Password combination valid", result: true });
-      }else{res.status(500).send( { type: "GET", result: false, message: "Username and Password combination is incorrect" });
 
+        // Removes all password information from the response
+        var newUser = {
+          _id: user._id,
+          company_id: user.company_id,
+          email: user.email,
+          username: user.username
+        }
+
+        res.send( { type: "POST", message: "Username and Password combination valid", result: true, data: newUser });
+      }else {
+        res.status(500).send( { type: "GET", result: false, message: "Username and Password combination is incorrect" } );
       }
     }
   }).catch((err) => {

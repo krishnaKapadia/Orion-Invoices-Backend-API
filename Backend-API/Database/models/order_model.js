@@ -49,7 +49,7 @@ const orderSchema = new Schema({
 
   client_name: {
     type: String,
-    requried: [true, 'Client name required']
+    required: [true, 'Client name required']
   },
 
   created: {

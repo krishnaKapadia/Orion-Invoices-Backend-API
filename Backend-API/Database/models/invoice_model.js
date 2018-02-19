@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
-const Float      = require('mongoose-float').loadType(mongoose);
+const mongoose    = require('mongoose');
+const Schema      = mongoose.Schema;
+const Float       = require('mongoose-float').loadType(mongoose);
+var autoIncrement = require('mongoose-auto-increment');
 /**
  * Model/Schema for Invoice Document in Mongo
  */
+
 
 // Item Schema
 const itemSchema = new Schema({

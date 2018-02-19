@@ -1,4 +1,5 @@
 var Invoice = require('../models/invoice_model');
+var Company = require('../models/company_model');
 
 /**
  * Handles all Invoice based CRUD actions through mongoose.
@@ -7,6 +8,8 @@ var Invoice = require('../models/invoice_model');
 
 // Gets all Invoice's
 exports.findAll = (req, res) => {
+  console.log(req.header('COMPANY_ID'));
+  // TODO: GET THE COMPANY ID FROM THE HEADER THAT WAS SENT WITH THE REQ
   Invoice.find({}).sort( [ ['paid', 1], ['date', -1] ]).then( (invoices) => {
     res.send({type: "GET", message: "GET order successful", invoices});
   }).catch( (err) => {
@@ -18,7 +21,6 @@ exports.findAll = (req, res) => {
 
 // Gets a single specified Invoice, matching the passed id
 exports.findOne = (req, res) => {
-
   Invoice.findById(req.params.id).then( (invoice) => {
     if(invoice == null) res.status(500).send( { type: "GET", message: "Failed to find specified invoice"});
     else res.send({ type: "GET", message: "GET order successful", invoice });
@@ -35,6 +37,10 @@ exports.create = (req, res) => {
     res.status(500).send({ type: "POST", message: "Invoice cannot be empty. Invoice could not be created" });
   }else {
     // Create the order in the database and return the created order
+
+    // Get and Set the inv_number
+
+    // var inv_number =
     Invoice.create(req.body).then( (invoice) => {
       res.send({ type: "POST", message: "Invoice Created", invoice });
     }).catch( (err) => {
@@ -44,7 +50,6 @@ exports.create = (req, res) => {
     })
   }
 }
-
 
 // Updates a single specified Invoice's details matching the passed id
 exports.update = (req, res) => {

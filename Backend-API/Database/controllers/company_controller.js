@@ -56,7 +56,13 @@ exports.create = (req, res) => {
         req.body.accounts = [ user._id ];
         console.log(req.body);
         Company.create(req.body).then( (company) => {
-          res.send( { type: "POST", message: "Company Created", company });
+          // Set user to have a company_id field corresponding to this company
+          user.company_id = company._id;
+
+          User.findOneAndUpdate({ '_id': user._id }, user, (err) => {
+            if(err) throw err;
+            else res.send( { type: "POST", message: "Company Created", company });
+          })
         }).catch( (err) => {
           if(err) {
             res.status(500).send( { type: "GET", message: "Could not create company", error: err.message });
@@ -116,6 +122,8 @@ exports.update = (req, res) => {
 }
 
 // Deletes a single specified Company matching the passed id
+// TODO update delete company to also remove all associated users as this
+// will cause users that do not belong to a company to take place which will break
 exports.delete = (req, res) => {
 
   Company.remove( { _id: req.params.code }, (err, user) => {
