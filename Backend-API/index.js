@@ -21,7 +21,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // TODO remove this, only us3ed to test loading animations on front end
-app.use(function(req,res,next){setTimeout(next,2000)});
+// app.use(function(req,res,next){setTimeout(next,2000)});
 
 // Custom route Middleware, ....com/api/...
 app.use(BASE_ROUTE, routes);
