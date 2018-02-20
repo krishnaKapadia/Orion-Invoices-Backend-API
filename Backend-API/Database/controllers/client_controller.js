@@ -38,6 +38,7 @@ exports.create = (req, res) => {
     res.status(500).send( { type: "POST", message: "Client information cannot be empty. Client could not be created" });
   } else {
     // Add associated company_id
+    if(typeof req.get('company_id') == undefined) res.status(500).send({ type: "POST", message: "No company_id spesified in header"});
     req.body.company_id = req.get('company_id');
 
     // Create the client in the database and return the created client

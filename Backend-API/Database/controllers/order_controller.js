@@ -7,7 +7,7 @@ var Order = require('../models/order_model');
 
 // Gets all Order's
 exports.findAll = (req, res) => {
-  Order.find({}).sort([['completed', 1], ['created', 'desc']]).then( (orders) => {
+  Order.find({ company_id: req.get("company_id") }).sort([['completed', 1], ['created', 'desc']]).then( (orders) => {
     res.send({type: "GET", message: "GET order successful", orders});
   }).catch( (err) => {
     if(err) {
@@ -34,6 +34,10 @@ exports.create = (req, res) => {
   if(!req.body) {
     res.status(500).send({ type: "POST", message: "Order name/description cannot be empty. Order could not be created" });
   } else {
+    // Add associated company_id
+    if(typeof req.get('company_id') == undefined) res.status(500).send({ type: "POST", message: "No company_id spesified in header"});
+    req.body.company_id = req.get('company_id');
+    
     // Create the order in the database and return the created order
     Order.create(req.body).then( (order) => {
       res.send({ type: "POST", message: "Order Created", order });

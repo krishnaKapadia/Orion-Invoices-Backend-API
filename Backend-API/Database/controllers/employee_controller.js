@@ -8,12 +8,16 @@ var Employee = require('../models/employee_model');
 // Gets all employees from the database
 exports.findAll = (req, res) => {
 
-  Employee.find({}, (err, data) => {
+  Employee.find({ company_id: req.get("company_id") }, (err, data) => {
     if(err || data === null) {
-      err.status(500).send({ type: "GET", message: "Could not retrieve employees" });
+      res.status(500).send({ type: "GET", message: "Could not retrieve employees" });
     }
   }).then( (employees) => {
     res.send({ type: "GET", message: "GET all employees successful", employees })
+  }).catch( (err) => {
+    if(err) {
+      res.status(500).send( { type: "GET", message: "Could not get employees" });
+    }
   });
 
 }
@@ -39,6 +43,9 @@ exports.create = (req, res) => {
   if(!req.body) {
     res.status(500).send( { type: "POST", message: "POST Request must have employee data"})
   } else {
+    // Add associated company_id
+    if(typeof req.get('company_id') == undefined) res.status(500).send({ type: "POST", message: "No company_id spesified in header"});
+    req.body.company_id = req.get('company_id');
     // Create the employee in the database and return the created employee
     Employee.create(req.body).then( (employee) => {
       res.send( { type: "POST", message: "Employee Created", employee});

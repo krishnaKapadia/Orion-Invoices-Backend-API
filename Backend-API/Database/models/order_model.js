@@ -39,8 +39,8 @@ const orderSchema = new Schema({
    */
 
   company_id: {
-    type: Schema.Types.ObjectId
-    // TODO make this required
+    type: Schema.Types.ObjectId,
+    required: [true, "Associated company id is required"]
   },
 
   code: {

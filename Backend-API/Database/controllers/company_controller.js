@@ -1,5 +1,9 @@
 var Company = require('../models/company_model');
 var User = require('../models/user_model');
+var Employee = require('../models/employee_model');
+var Client = require('../models/client_model');
+var Order = require('../models/order_model');
+var Task = require('../models/task_model');
 const bcrypt   = require('bcrypt-nodejs');
 var user_controller = require('./user_controller')
 /**
@@ -129,10 +133,21 @@ exports.update = (req, res) => {
 }
 
 // Deletes a single specified Company matching the passed id
-// TODO update delete company to also remove all associated users as this
 // will cause users that do not belong to a company to take place which will break
 exports.delete = (req, res) => {
-
+  // First remove associated users
+  User.remove({ company_id: req.params.code });
+  // Then all clients
+  Client.remove({ company_id: req.params.code });
+  // Then all employees
+  Employee.remove({ company_id: req.params.code });
+  // Then all orders
+  Order.remove({ company_id: req.params.code });
+  // Then all invoices
+  Invoice.remove({ company_id: req.params.code });
+  // Then all tasks
+  Tasks.remove({ company_id: req.params.code });
+  // Then remove the company
   Company.remove( { _id: req.params.code }, (err, user) => {
     if(err) {
       res.status(500).send( { type: "DELETE", message: "Failed to delete company" });

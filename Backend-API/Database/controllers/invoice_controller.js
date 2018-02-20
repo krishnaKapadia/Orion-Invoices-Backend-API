@@ -8,8 +8,7 @@ var Company = require('../models/company_model');
 
 // Gets all Invoice's
 exports.findAll = (req, res) => {
-  // TODO: GET THE COMPANY ID FROM THE HEADER THAT WAS SENT WITH THE REQ
-  Invoice.find({}).sort( [ ['paid', 1], ['date', -1] ]).then( (invoices) => {
+  Invoice.find({ company_id: req.get("company_id") }).sort( [ ['paid', 1], ['date', -1] ]).then( (invoices) => {
     res.send({type: "GET", message: "GET order successful", invoices});
   }).catch( (err) => {
     if(err) {
@@ -37,6 +36,10 @@ exports.create = (req, res) => {
   }else {
     // Create the order in the database and return the created order
     if(req.body.inv_number !== null){
+      // Add associated company_id
+      if(typeof req.get('company_id') == undefined) res.status(500).send({ type: "POST", message: "No company_id spesified in header"});
+      req.body.company_id = req.get('company_id');
+
       // Increment invoice number in comapny
       Company.findOneAndUpdate({ '_id': req.get('company_id') }, {'inv_number': req.body.inv_number } ,(err) => {
         if(err) throw err;
