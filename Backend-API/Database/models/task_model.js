@@ -11,7 +11,11 @@ const taskSchema = new Schema({
    *  Ensures that the task is linked to the user that
    * created it.
    */
-
+  company_id: {
+    type: Schema.Types.ObjectId,
+    required: [true, "Associated company id is required"]
+  },
+  
   user_id: {
     type: Schema.Types.ObjectId
     // TODO make this required
