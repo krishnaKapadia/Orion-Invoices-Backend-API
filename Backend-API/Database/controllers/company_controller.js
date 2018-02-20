@@ -54,14 +54,21 @@ exports.create = (req, res) => {
 
         // Create the company adding the newly created user id to the list of associated accounts
         req.body.accounts = [ user._id ];
-        console.log(req.body);
         Company.create(req.body).then( (company) => {
           // Set user to have a company_id field corresponding to this company
           user.company_id = company._id;
 
           User.findOneAndUpdate({ '_id': user._id }, user, (err) => {
+            // Removes all password information from the response
+            var newUser = {
+              _id: user._id,
+              company_id: user.company_id,
+              email: user.email,
+              username: user.username
+            }
+
             if(err) throw err;
-            else res.send( { type: "POST", message: "Company Created", company });
+            else res.send( { type: "POST", message: "Company Created", result: true, company, data: newUser });
           })
         }).catch( (err) => {
           if(err) {
