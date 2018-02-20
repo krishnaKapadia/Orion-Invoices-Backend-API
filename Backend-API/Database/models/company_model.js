@@ -33,7 +33,9 @@ const companySchema = new Schema({
   },
 
   inv_number: {
-    type: Number
+    type: Number,
+    required: true,
+    default: 0
   },
 
   accounts: {

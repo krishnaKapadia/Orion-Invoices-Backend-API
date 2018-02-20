@@ -1,4 +1,5 @@
 var User = require('../models/user_model');
+var Company = require('../models/company_model');
 const bcrypt   = require('bcrypt-nodejs');
 
 /**
@@ -40,15 +41,22 @@ exports.login = (req, res) => {
       var hashPass = this.reHash(req.body.password, user.salt).password;
       if(user.password === hashPass) {
 
-        // Removes all password information from the response
-        var newUser = {
-          _id: user._id,
-          company_id: user.company_id,
-          email: user.email,
-          username: user.username
-        }
+        // Get company inv_number
+        Company.findOne({ _id: user.company_id }).then((company) => {
 
-        res.send( { type: "POST", message: "Username and Password combination valid", result: true, data: newUser });
+          // Removes all password information from the response
+          var newUser = {
+            _id: user._id,
+            company_id: user.company_id,
+            email: user.email,
+            username: user.username,
+            inv_number: company.inv_number + 1
+          }
+
+          res.send( { type: "POST", message: "Username and Password combination valid", result: true, data: newUser });
+        }).catch((err) => {
+          if(err) res.status(500).send( { type: "GET", result: false, message: "User does not have an associated company, please try again." });
+        })
       }else {
         res.status(500).send( { type: "GET", result: false, message: "Username and Password combination is incorrect" } );
       }
@@ -89,8 +97,9 @@ exports.update = (req, res) => {
     else {
       // // Edit the user
       user.username = req.body.username;
-      user.password = this.hash(req.body.password);
+      user.password = this.reHash(req.body.password, user.salt);
       user.email    = req.body.email;
+      user.company_id = req.body.company_id;
 
       // Save the newly modified employee
       user.save().then( (user) => {
