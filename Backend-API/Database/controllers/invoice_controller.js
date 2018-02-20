@@ -8,7 +8,6 @@ var Company = require('../models/company_model');
 
 // Gets all Invoice's
 exports.findAll = (req, res) => {
-  console.log(req.header('COMPANY_ID'));
   // TODO: GET THE COMPANY ID FROM THE HEADER THAT WAS SENT WITH THE REQ
   Invoice.find({}).sort( [ ['paid', 1], ['date', -1] ]).then( (invoices) => {
     res.send({type: "GET", message: "GET order successful", invoices});
@@ -37,17 +36,23 @@ exports.create = (req, res) => {
     res.status(500).send({ type: "POST", message: "Invoice cannot be empty. Invoice could not be created" });
   }else {
     // Create the order in the database and return the created order
-
-    // Get and Set the inv_number
-
-    // var inv_number =
-    Invoice.create(req.body).then( (invoice) => {
-      res.send({ type: "POST", message: "Invoice Created", invoice });
-    }).catch( (err) => {
-      if(err) {
-        res.status(500).send( { type: "POST", message: "Could not create invoice", error: err.message})
-      }
-    })
+    if(req.body.inv_number !== null){
+      // Increment invoice number in comapny
+      Company.findOneAndUpdate({ '_id': req.get('company_id') }, {'inv_number': req.body.inv_number } ,(err) => {
+        if(err) throw err;
+        else {
+          Invoice.create(req.body).then( (invoice) => {
+            res.send({ type: "POST", message: "Invoice Created", invoice });
+          }).catch( (err) => {
+            if(err) {
+              res.status(500).send( { type: "POST", message: "Could not create invoice", error: err.message})
+            }
+          })
+        }
+      });
+    }else{
+      res.status(500).send( { type: "POST", message: "Could not create invoice", error: "Invoice number not valid" });
+    }
   }
 }
 
