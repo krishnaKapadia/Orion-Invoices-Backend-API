@@ -7,9 +7,8 @@ var Client = require('../models/client_model');
 
 // Gets all clients
 exports.findAll = (req, res) => {
-  // console.log("Client /GET");
 
-  Client.find({}, (err, data) => {
+  Client.find({ company_id: req.get("company_id")}, (err, data) => {
     if(err || data === null) {
       err.status(500).send({ type: "GET", message: "Could not retrieve clients" });
     }
@@ -38,6 +37,9 @@ exports.create = (req, res) => {
   if(!req.body) {
     res.status(500).send( { type: "POST", message: "Client information cannot be empty. Client could not be created" });
   } else {
+    // Add associated company_id
+    req.body.company_id = req.get('company_id');
+
     // Create the client in the database and return the created client
     Client.create(req.body).then( (client) => {
       res.send( { type: "POST", message: "Client created", client } );
