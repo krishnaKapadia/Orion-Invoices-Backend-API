@@ -17,7 +17,6 @@ exports.findAll = (req, res) => {
   })
 }
 
-
 // Gets a single specified task, matching the passed id
 exports.findOne = (req, res) => {
 
@@ -39,7 +38,7 @@ exports.create = (req, res) => {
     res.status(500).send( { type: "POST", message: "POST Request must have task data"})
   } else {
     req.body.company_id = req.get('company_id');
-    
+
     // Create the task in the database and return the created task
     Task.create(req.body).then( (task) => {
       res.send( { type: "POST", message: "Task Created", task});

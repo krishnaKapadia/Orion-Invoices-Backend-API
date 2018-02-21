@@ -1,6 +1,7 @@
 var Company = require('../models/company_model');
 var User = require('../models/user_model');
 var Employee = require('../models/employee_model');
+var Invoice = require('../models/invoice_model');
 var Client = require('../models/client_model');
 var Order = require('../models/order_model');
 var Task = require('../models/task_model');
@@ -108,28 +109,39 @@ exports.hash = (password) => {
 
 // Updates a single specified Company's details matching the passed id
 exports.update = (req, res) => {
-  // First get company that matches id
-  Company.findById(req.params.code).then( (company) => {
-    if(company == null) res.status(500).send( { type: "GET", message: "Could not retrieve user matching that id" });
-    else {
-      // // Edit the company
-      company.name = req.body.name;
-      company.address = req.body.address;
-      company.email = req.body.email;
-      company.accounts = req.body.accounts;
+  console.log(req.body);
+  if(typeof req.body.inv_number !== 'undefined') {
 
-      // Save the newly modified employee
-      company.save().then( (company) => {
-        res.send( { type: "PUT", message: "Company Updated", company });
-      }).catch( (error) => {
-        res.status(500).send( { type: "PUT", message: "Could not save company", error });
-      });
-    }
-  }).catch( (error) => {
-    if(error) {
-      res.status(500).send( { type: "GET", message: "Could not find company", error });
-    }
-  })
+    // Changing base inv_number of company
+    Company.findOneAndUpdate({ '_id': req.params.code }, { 'inv_number': req.body.inv_number },  (err, company) => {
+      if(err) res.status(500).send( { type: "GET", message: "Could not retrieve company matching that id" });
+      else res.send( { type: "PUT", message: "Company Updated" });
+    })
+  }else {
+    // First get company that matches id
+    Company.findById(req.params.code).then( (company) => {
+      if(company == null) res.status(500).send( { type: "GET", message: "Could not retrieve user matching that id" });
+      else {
+        // // Edit the company
+        if(typeof req.body.name !== 'undefined') company.name = req.body.name;
+        if(typeof req.body.address !== 'undefined') company.address = req.body.address;
+        if(typeof req.body.email !== 'undefined') company.email = req.body.email;
+        if(typeof req.body.accounts !== 'undefined') company.accounts = req.body.accounts;
+
+        // Save the newly modified employee
+        company.save().then( (company) => {
+          res.send( { type: "PUT", message: "Company Updated", company });
+        }).catch( (error) => {
+          res.status(500).send( { type: "PUT", message: "Could not save company", error });
+        });
+      }
+    }).catch( (error) => {
+      if(error) {
+        res.status(500).send( { type: "GET", message: "Could not find company", error });
+      }
+    })
+  }
+
 }
 
 // Deletes a single specified Company matching the passed id
@@ -146,7 +158,7 @@ exports.delete = (req, res) => {
   // Then all invoices
   Invoice.remove({ company_id: req.params.code });
   // Then all tasks
-  Tasks.remove({ company_id: req.params.code });
+  Task.remove({ company_id: req.params.code });
   // Then remove the company
   Company.remove( { _id: req.params.code }, (err, user) => {
     if(err) {
