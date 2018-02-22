@@ -25,8 +25,8 @@ exports.findAll = (req, res) => {
 
 // Gets a single specified Company, matching the passed id
 exports.findOne = (req, res) => {
-
   Company.findById(req.params.code).then( (company) => {
+    console.log(company);
     if(company == null) res.status(500).send( { type: "GET", message: "Could not retrieve company" });
     else res.send({ type: "GET", message: "GET company successful", company });
   }).catch( (err) => {

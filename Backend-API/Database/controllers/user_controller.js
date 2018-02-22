@@ -48,6 +48,8 @@ exports.login = (req, res) => {
           var newUser = {
             _id: user._id,
             company_id: user.company_id,
+            company_name: company.name,
+            company_created: company.created,
             email: user.email,
             username: user.username,
             inv_number: company.inv_number + 1
@@ -96,10 +98,16 @@ exports.update = (req, res) => {
     if(user == null) res.status(500).send( { type: "GET", message: "Could not retrieve user matching that id" });
     else {
       // // Edit the user
-      user.username = req.body.username;
-      user.password = this.reHash(req.body.password, user.salt);
-      user.email    = req.body.email;
-      user.company_id = req.body.company_id;
+      if(typeof req.body.username != 'undefined') user.username = req.body.username;
+      if(typeof req.body.password != 'undefined') user.password = this.reHash(req.body.password, user.salt);
+      if(typeof req.body.email != 'undefined')    user.email    = req.body.email;
+      if(typeof req.body.company_id != 'undefined') user.company_id = req.body.company_id;
+      if(typeof req.body.company_name != 'undefined') {
+        user.company_name = req.body.company_name;
+        Company.findOneAndUpdate({ '_id': req.get('company_id')}, { name: req.body.company_name }, (err) => {
+          if(err) res.status(500).send( { type: "PUT", message: "Could not save User information", err });
+        })
+      }
 
       // Save the newly modified employee
       user.save().then( (user) => {
