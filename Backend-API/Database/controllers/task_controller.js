@@ -8,7 +8,7 @@ var Task = require('../models/task_model');
 // Gets all Task's
 exports.findAll = (req, res) => {
 
-  Task.find({}).then( (tasks) => {
+  Task.find({ company_id: req.get("company_id") }).then( (tasks) => {
     res.send(tasks);
   }).catch( (err) => {
     if(err) {
